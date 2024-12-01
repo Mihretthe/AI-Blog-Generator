@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login
+    </title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" />
+</head>
+<body class = "bg-gray-300">
+    <header>
+        <nav>
+            <div class = "flex justify-between p-5 bg-blue-700 text-white">
+                <div class = "text-2xl font-bold">
+                    AI Blog Generator
+                </div>
+                <div class = "flex gap-2">
+                    <!-- <div href="#" class = "hover:underline">
+                        Login
+                    </div> -->
+                    <a href="signup" class = "hover:underline">
+                        Signup
+                    </a>
+                </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content  -->
+     <div class = "flex items-center justify-center h-screen">
+        <div class = "bg-white p-8 shadow-md rounded-lg max-w-md w-full">
+            <form class = "space-y-4" action="" method="post">
+                {% csrf_token %}
+
+                {% if error_message %}
+                <div>
+                    <h2 align = "center" style="color: red;">{{ error_message }}</h2>
+                </div>
+                {% endif %}
+
+                <h2 class="text-xl font-bold">
+                    Login
+                </h2>
+                <div>
+                    <label for="username" class="block mb-1 font-medium">
+                        Username
+                    </label>
+                    <input type="text" id="username"
+                    name = "username"
+                    placeholder="Enter your username..."
+                    class = "w-full p-2 border rounded"
+                    />
+                </div>
+
+                <div>
+                    <label for="password" class="block mb-1 font-medium">
+                        Password
+                    </label>
+                    <input type="password" id="password"
+                    name = "password"
+                    placeholder="Enter your password..."
+                    class = "w-full p-2 border rounded"
+                    />
+                </div>
+
+                <div>
+                    <button type="submit" class="w-full bg-blue-600 text-white rounded p-2 hover:bg-blue-700">Login</button>
+                </div>
+
+            </form>
+        </div>
+     </div>
+
+    
+</body>
+</html>
