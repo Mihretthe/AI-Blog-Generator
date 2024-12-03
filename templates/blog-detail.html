@@ -9,11 +9,24 @@
 <body class = "flex flex-col min-h-screen bg-gray-100 font-sans antialiased">
     <nav>
         <div class = "flex justify-between p-5 bg-blue-700 text-white">
-            <div class = "text-2xl font-bold">
-                AI Blog Generator
-            </div>
-            <div class = "hover:underline">
-                Logout
+            <a href = "/">
+                <div class = "text-2xl font-bold">
+                    AI Blog Generator
+                </div>
+            </a>
+
+            <div class = "flex gap-10">
+
+                <a href="{% url 'blog-list' %}">
+                    <div class = "hover:underline">
+                        My Blogs
+                    </div>
+                </a>
+                <a href="{% url 'logout' %}">
+                    <div class = "hover:underline">
+                        Logout
+                    </div>
+                </a>
             </div>
         </div>
     </nav>
@@ -26,15 +39,15 @@
            <section>
             <h2 class = "text-xl mb-4 font-semibold">Blog Post Details</h2>
             <p>
-                This is the content
+                {{blog_detail.content}}
             </p>
 
             <hr class = "bg-gray-400 my-4">
 
-            <h4 class="text-lg font-semibold">Youtube Title</h4>
-            <p class="text-gray-700">The title</p>
+            <!-- <h4 class="text-lg font-semibold">Youtube Title</h4>
+            <p class="text-gray-700">The title</p> -->
             <h4 class="text-lg font-semibold mt-4">Youtube link</h4>
-            <a href="#" class="text-blue-600 hover:underline">https://www.youtube.com</a>
+            <a href={{blog_detail.link}} class="text-blue-600 hover:underline">{{blog_detail.link}}</a>
            </section>
             
 

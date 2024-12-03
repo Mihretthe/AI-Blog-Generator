@@ -9,12 +9,14 @@
 <body class = "flex flex-col min-h-screen bg-gray-100 font-sans antialiased">
     <nav>
         <div class = "flex justify-between p-5 bg-blue-700 text-white">
-            <div class = "text-2xl font-bold">
-                AI Blog Generator
-            </div>
-            <div class = "hover:underline">
+            <a href = "/">
+                <div class = "text-2xl font-bold">
+                    AI Blog Generator
+                </div>
+            </a>
+            <a href="logout" class = "hover:underline">
                 Logout
-            </div>
+            </a>
         </div>
     </nav>
 
@@ -28,18 +30,20 @@
                 <h2 class = "text-xl font-semibold mb-4 ">
                     All Blog List
                 </h2>
-                <div class="space-y-4">
-                    <div class=" border border-gray-300 p-4 rounded shadow-md transition transform  hover:scale-105">
 
-                        <h3 class = "text-lg font-semibold">Blog Post Title 1</h3>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur, repudiandae harum! Ipsum quo aperiam veniam porro explicabo repudiandae modi! Tempore!</p>
-                    </div>
+                <div class="flex flex-col gap-4">
+                    {% for article in articles reversed %}
 
-                    <div class=" border border-gray-300 p-4 rounded shadow-md transition transform hover:scale-105">
+                    <a href="blog-details/{{article.id}}/">
 
-                        <h3 class = "text-lg font-semibold">Blog Post Title 2</h3>
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur, repudiandae harum! Ipsum quo aperiam veniam porro explicabo repudiandae modi! Tempore!</p>
-                    </div>
+                        <div class=" border border-gray-300 p-4 rounded shadow-md transition transform  hover:scale-105" >
+
+                            <h3 class = "text-lg font-semibold">Blog Post</h3>
+                            <p> {{article.title}} </p>
+                        </div>
+                    </a>
+
+                    {% endfor %}
                 </div>
             </section>
 

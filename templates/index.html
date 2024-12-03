@@ -11,11 +11,16 @@
     <header>
         <nav>
             <div class = "flex justify-between p-5 bg-blue-700 text-white">
-                <div class = "text-2xl font-bold">
-                    AI Blog Generator
-                </div>
+                <a href = "/">
+                    <div class = "text-2xl font-bold">
+                        AI Blog Generator
+                    </div>
+                </a>
                 <div class = "flex space-x-4">
                     <p>Welcome {{user.username}}</p>
+                    <a href="blog-list" class = "hover:underline">
+                        My Blogs
+                    </a>
                     <a href="logout" class = "hover:underline">
                         Logout
                     </a>
@@ -43,21 +48,25 @@
                  </p>
                  </div>
                  <!-- Input Arena -->
-                 <div>
-                    <h2 class = "text-xl mb-4 font-semibold">
-                        Enter YouTube Video Link
-                    </h2>
-                     <div class = "flex space-x-4">
-                         <input id="youtubeLink" type="url" placeholder="Paste your url here..."
-                         class = "flex-grow p-2 border border-blue-400 rounded-l-md"
-                         />
-                         <button id = "generateBlogButton" class = "bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition-colors">
-                             Generate
-                         </button>
-                     </div>
-                 </div>
+                  <!-- <form action="" method="post"> -->
+                    
+
+                      <div>
+                         <h2 class = "text-xl mb-4 font-semibold">
+                             Enter YouTube Video Link
+                         </h2>
+                          <div class = "flex space-x-4">
+                              <input id="youtubeLink" type="url" placeholder="Paste your url here..."
+                              class = "flex-grow p-2 border border-blue-400 rounded-l-md"
+                              />
+                              <button id = "generateBlogButton" class = "bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition-colors">
+                                  Generate
+                              </button>
+                          </div>
+                      </div>
+                  <!-- </form> -->
                  <!-- Loading -->
-                 <div style="display: none;" class = "text-center text-gray-700">
+                 <div id = "loading" style="display: none;" class = "text-center text-gray-700">
                      Loading ...
                  </div>
                  <!-- Generated Blog Arena -->
@@ -83,6 +92,54 @@
         </a>
             
      </footer>
+
+     <script>
+
+        
+         const generateBlogButton = document.getElementById('generateBlogButton')
+         // const loadingIndicator = document.getElementById('loading')
+         
+         generateBlogButton.addEventListener('click', async () => {
+            
+            const youtubeLink = document.getElementById('youtubeLink').value
+            const blogContent = document.getElementById('blogContent')
+            // alert(youtubeLink)
+            if (youtubeLink){
+                document.getElementById('loading').style.display = 'block'   
+                // loadingIndicator.classList.remove('hidden')
+                blogContent.innerHTML = ''
+    
+                const endpoint = '/generate-blog'
+    
+                try{
+    
+                    const response = await fetch(endpoint, 
+                        {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type' : 'application/json' 
+                            },
+                            body: JSON.stringify({link: youtubeLink})
+                        }
+                    )
+    
+                    const data = await response.json()
+                    blogContent.innerHTML = data.content 
+    
+    
+                } catch(error){
+                    alert("Something went wrong. Please try again.")
+                }
+    
+                document.getElementById('loading').style.display = 'none'
+    
+    
+            }else{
+                alert("Please input the url")
+            }
+        })
+
+     </script>
 
 </body>
 </html>
