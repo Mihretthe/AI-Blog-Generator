@@ -4,142 +4,252 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Blog Generator</title>
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Inter', sans-serif; }
+        .gradient-text { background: linear-gradient(135deg, #14b8a6 0%, #06b6d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .glass-card { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(71, 85, 105, 0.5); }
+        .glow { box-shadow: 0 0 40px rgba(20, 184, 166, 0.15); }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .float-animation { animation: float 3s ease-in-out infinite; }
+        @keyframes pulse-slow { 0%, 100% { opacity: 0.4; } 50% { opacity: 0.8; } }
+        .pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+    </style>
 </head>
-<body class = "flex flex-col min-h-screen bg-gray-100 font-sans antialiased">
-    <!-- Header navigation part -->
-    <header>
-        <nav>
-            <div class = "flex justify-between p-5 bg-blue-700 text-white">
-                <a href = "/">
-                    <div class = "text-2xl font-bold">
-                        AI Blog Generator
+<body class="min-h-screen bg-slate-900 text-slate-100">
+    <!-- Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-teal-500/10 rounded-full blur-3xl pulse-slow"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pulse-slow" style="animation-delay: 2s;"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-10 border-b border-slate-800">
+        <nav class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="/" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                        </svg>
                     </div>
+                    <span class="text-xl font-bold">AI Blog Generator</span>
                 </a>
-                <div class = "flex space-x-4">
-                    <p>Welcome {{user.username}}</p>
-                    <a href="blog-list" class = "hover:underline">
-                        My Blogs
-                    </a>
-                    <a href="logout" class = "hover:underline">
-                        Logout
-                    </a>
+                <div class="flex items-center space-x-6">
+                    <span class="text-slate-400">Welcome, <span class="text-teal-400 font-medium">{{user.username}}</span></span>
+                    <a href="blog-list" class="text-slate-300 hover:text-teal-400 transition-colors font-medium">My Blogs</a>
+                    <a href="logout" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-all font-medium">Logout</a>
                 </div>
             </div>
         </nav>
     </header>
 
-    <!-- Main part -->
-    <div class = "flex-grow container mx-auto mt-10 px-4 sm:px-0">
-        <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md transition-transform transform hover:scale-105 flex flex-col">
-    
+    <main class="relative z-10">
+        <!-- Hero Section -->
+        <section class="max-w-7xl mx-auto px-6 pt-16 pb-12 text-center">
+            <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 mb-6">
+                <span class="w-2 h-2 rounded-full bg-teal-400 animate-pulse"></span>
+                <span class="text-teal-400 text-sm font-medium">Powered by Advanced AI</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
+                Transform YouTube Videos into<br>
+                <span class="gradient-text">Stunning Blog Articles</span>
+            </h1>
+            <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-8">
+                Harness the power of artificial intelligence to convert any YouTube video into 
+                well-structured, engaging blog content in seconds.
+            </p>
+        </section>
 
-             <div class = "text-center ">
-
-                <!-- Welcome Message -->
-                 <h2 class = "text-2xl font-semibold mb-4">
-                    Welcome to the AI Blog Generator
-                 </h2>
-
-                 <!-- Description -->
-                 <p class = "text-gray-700">                     
-                    Generate high-quality blog articles from YouTube videos using artificial intelligence.
-                    Simply enter the link to the YouTube video below and let the AI create the content for you!
-                 </p>
-                 </div>
-                 <!-- Input Arena -->
-                  <!-- <form action="" method="post"> -->
-                    
-
-                      <div>
-                         <h2 class = "text-xl mb-4 font-semibold">
-                             Enter YouTube Video Link
-                         </h2>
-                          <div class = "flex space-x-4">
-                              <input id="youtubeLink" type="url" placeholder="Paste your url here..."
-                              class = "flex-grow p-2 border border-blue-400 rounded-l-md"
-                              />
-                              <button id = "generateBlogButton" class = "bg-blue-600 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition-colors">
-                                  Generate
-                              </button>
-                          </div>
-                      </div>
-                  <!-- </form> -->
-                 <!-- Loading -->
-                 <div id = "loading" style="display: none;" class = "text-center text-gray-700">
-                     Loading ...
-                 </div>
-                 <!-- Generated Blog Arena -->
-                
-                <section class="mt-10 flex-grow">
-                    <h2 class = "text-xl mb-4 font-semibold ">
-                        Generated Blog Article
-                    </h2>
-                    <div id="blogContent" class="mt-2 text-gray-700 space-y-4">
-
-
+        <!-- Generator Section -->
+        <section class="max-w-4xl mx-auto px-6 pb-16">
+            <div class="glass-card rounded-2xl p-8 glow">
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
                     </div>
-                </section>
+                    <div>
+                        <h2 class="text-xl font-bold">Enter YouTube Video Link</h2>
+                        <p class="text-slate-400 text-sm">Paste any YouTube URL to get started</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                    <input 
+                        id="youtubeLink" 
+                        type="url" 
+                        placeholder="https://www.youtube.com/watch?v=..."
+                        class="flex-grow px-5 py-4 rounded-xl bg-slate-800/50 border border-slate-700 focus:border-teal-500 focus:ring-2 focus:ring-teal-500/20 outline-none transition-all placeholder-slate-500"
+                    />
+                    <button 
+                        id="generateBlogButton" 
+                        class="px-8 py-4 rounded-xl bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-900 font-semibold transition-all transform hover:scale-105 flex items-center justify-center space-x-2"
+                    >
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                        <span>Generate</span>
+                    </button>
+                </div>
 
-             </div>
-         </div>
-     
-    
+                <!-- Loading State -->
+                <div id="loading" style="display: none;" class="text-center py-12">
+                    <div class="inline-flex items-center space-x-3">
+                        <svg class="animate-spin w-6 h-6 text-teal-400" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span class="text-slate-300 font-medium">Generating your blog article...</span>
+                    </div>
+                    <p class="text-slate-500 text-sm mt-2">This may take a few moments</p>
+                </div>
+
+                <!-- Generated Content -->
+                <div id="blogContentWrapper" style="display: none;" class="border-t border-slate-700 pt-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold flex items-center space-x-2">
+                            <svg class="w-5 h-5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                            <span>Generated Blog Article</span>
+                        </h3>
+                        <button id="copyButton" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 transition-all text-sm font-medium flex items-center space-x-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                            </svg>
+                            <span>Copy</span>
+                        </button>
+                    </div>
+                    <div id="blogContent" class="prose prose-invert max-w-none p-6 rounded-xl bg-slate-800/30 border border-slate-700/50"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="max-w-7xl mx-auto px-6 py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Why Choose Our Generator?</h2>
+                <p class="text-slate-400 max-w-xl mx-auto">Powerful features designed to save you time and boost your content creation</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Feature 1 -->
+                <div class="glass-card rounded-xl p-6 hover:border-teal-500/50 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-teal-500/10 flex items-center justify-center mb-4 group-hover:bg-teal-500/20 transition-colors">
+                        <svg class="w-6 h-6 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Lightning Fast</h3>
+                    <p class="text-slate-400 text-sm">Generate complete blog articles in seconds, not hours. Our AI processes videos instantly.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="glass-card rounded-xl p-6 hover:border-teal-500/50 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 flex items-center justify-center mb-4 group-hover:bg-cyan-500/20 transition-colors">
+                        <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">AI-Powered Quality</h3>
+                    <p class="text-slate-400 text-sm">Advanced language models ensure your content is well-written, coherent, and engaging.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="max-w-7xl mx-auto px-6 py-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">How It Works</h2>
+                <p class="text-slate-400">Two simple steps to transform video content</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center mx-auto mb-4 text-2xl font-bold text-slate-900">1</div>
+                    <h3 class="text-lg font-semibold mb-2">Paste Link</h3>
+                    <p class="text-slate-400 text-sm">Copy any YouTube video URL and paste it into the generator</p>
+                </div>
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center mx-auto mb-4 text-2xl font-bold text-slate-900">2</div>
+                    <h3 class="text-lg font-semibold mb-2">Generate</h3>
+                    <p class="text-slate-400 text-sm">Click generate and watch as AI transforms the video into a blog</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <!-- Footer -->
-     <footer class = "text-center font-semibold p-5 mt-6">
-        Powered by <a class = "hover:underline" href = "https://github.com/mihretthe">
-            Mihretthe
-        </a>
-            
-     </footer>
+    <footer class="relative z-10 border-t border-slate-800 py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p class="text-slate-400">
+                Powered by <a href="https://github.com/mihretthe" class="text-teal-400 hover:text-teal-300 font-medium transition-colors">Mihretthe</a>
+            </p>
+        </div>
+    </footer>
 
-     <script>
-
+    <script>
+        const generateBlogButton = document.getElementById('generateBlogButton');
+        const copyButton = document.getElementById('copyButton');
         
-         const generateBlogButton = document.getElementById('generateBlogButton')
-         // const loadingIndicator = document.getElementById('loading')
-         
-         generateBlogButton.addEventListener('click', async () => {
+        generateBlogButton.addEventListener('click', async () => {
+            const youtubeLink = document.getElementById('youtubeLink').value;
+            const blogContent = document.getElementById('blogContent');
+            const blogContentWrapper = document.getElementById('blogContentWrapper');
             
-            const youtubeLink = document.getElementById('youtubeLink').value
-            const blogContent = document.getElementById('blogContent')
-            // alert(youtubeLink)
-            if (youtubeLink){
-                document.getElementById('loading').style.display = 'block'   
-                // loadingIndicator.classList.remove('hidden')
-                blogContent.innerHTML = ''
-    
-                const endpoint = '/generate-blog'
-    
-                try{
-    
-                    const response = await fetch(endpoint, 
-                        {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type' : 'application/json' 
-                            },
-                            body: JSON.stringify({link: youtubeLink})
-                        }
-                    )
-    
-                    const data = await response.json()
-                    blogContent.innerHTML = data.content 
-    
-    
-                } catch(error){
-                    alert("Something went wrong. Please try again.")
+            if (youtubeLink) {
+                document.getElementById('loading').style.display = 'block';
+                blogContentWrapper.style.display = 'none';
+                blogContent.innerHTML = '';
+                
+                const endpoint = '/generate-blog';
+                
+                try {
+                    const response = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ link: youtubeLink })
+                    });
+                    
+                    const data = await response.json();
+                    blogContent.innerHTML = data.content;
+                    blogContentWrapper.style.display = 'block';
+                } catch (error) {
+                    alert("Something went wrong. Please try again.");
                 }
-    
-                document.getElementById('loading').style.display = 'none'
-    
-    
-            }else{
-                alert("Please input the url")
+                
+                document.getElementById('loading').style.display = 'none';
+            } else {
+                alert("Please input the URL");
             }
-        })
+        });
 
-     </script>
-
+        copyButton.addEventListener('click', () => {
+            const blogContent = document.getElementById('blogContent');
+            navigator.clipboard.writeText(blogContent.innerText).then(() => {
+                copyButton.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                    </svg>
+                    <span>Copied!</span>
+                `;
+                setTimeout(() => {
+                    copyButton.innerHTML = `
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                        <span>Copy</span>
+                    `;
+                }, 2000);
+            });
+        });
+    </script>
 </body>
 </html>

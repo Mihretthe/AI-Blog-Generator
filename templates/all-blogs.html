@@ -3,59 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog List</title>
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" />
+    <title>My Blogs - AI Blog Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body class = "flex flex-col min-h-screen bg-gray-100 font-sans antialiased">
-    <nav>
-        <div class = "flex justify-between p-5 bg-blue-700 text-white">
-            <a href = "/">
-                <div class = "text-2xl font-bold">
-                    AI Blog Generator
-                </div>
-            </a>
-            <a href="logout" class = "hover:underline">
-                Logout
-            </a>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-
-    <div class = "container mx-auto mt-10 px-4 sm:px-0">
-        <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
-
-            
-            <section>
-                <h2 class = "text-xl font-semibold mb-4 ">
-                    All Blog List
-                </h2>
-
-                <div class="flex flex-col gap-4">
-                    {% for article in articles reversed %}
-
-                    <a href="blog-details/{{article.id}}/">
-
-                        <div class=" border border-gray-300 p-4 rounded shadow-md transition transform  hover:scale-105" >
-
-                            <h3 class = "text-lg font-semibold">Blog Post</h3>
-                            <p> {{article.title}} </p>
-                        </div>
-                    </a>
-
-                    {% endfor %}
-                </div>
-            </section>
-
-        </div>
+<body class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 font-sans antialiased">
+    <!-- Background Pattern -->
+    <div class="fixed inset-0 opacity-30">
+        <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgb(51, 65, 85) 1px, transparent 0); background-size: 40px 40px;"></div>
     </div>
 
-    <footer class = "text-center font-semibold p-5 mt-6">
-        Powered by <a class = "hover:underline" href = "https://github.com/mihretthe">
-            Mihretthe
-        </a>
-            
-     </footer>
-    
+    <!-- Gradient Orbs -->
+    <div class="fixed top-0 left-1/4 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl"></div>
+    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10 flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="border-b border-slate-800/50 backdrop-blur-sm bg-slate-900/50 sticky top-0 z-50">
+            <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <a href="/" class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-teal-400 to-cyan-500 rounded-lg flex items-center justify-center">
+                            <svg class="w-5 h-5 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <span class="text-xl font-bold text-white">AI Blog Generator</span>
+                    </a>
+                    <div class="flex items-center gap-6">
+                        <a href="/" class="text-slate-300 hover:text-teal-400 transition-colors font-medium">
+                            Generate New
+                        </a>
+                        <a href="logout" class="text-slate-300 hover:text-teal-400 transition-colors font-medium">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow px-4 py-12">
+            <div class="max-w-4xl mx-auto">
+                <!-- Page Header -->
+                <div class="mb-10">
+                    <h1 class="text-3xl font-bold text-white mb-2">My Blog Articles</h1>
+                    <p class="text-slate-400">All your AI-generated blog posts in one place</p>
+                </div>
+
+                <!-- Blog List -->
+                <div class="space-y-4">
+                    {% for article in articles reversed %}
+                    <a href="blog-details/{{article.id}}/" class="block group">
+                        <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6 transition-all duration-300 hover:bg-slate-800/70 hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10">
+                            <div class="flex items-start justify-between gap-4">
+                                <div class="flex-grow">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="px-2 py-1 bg-teal-500/10 text-teal-400 text-xs font-medium rounded-md">
+                                            Blog Post
+                                        </span>
+                                    </div>
+                                    <h3 class="text-lg font-semibold text-white group-hover:text-teal-400 transition-colors">
+                                        {{ article.title }}
+                                    </h3>
+                                </div>
+                                <div class="flex-shrink-0">
+                                    <svg class="w-5 h-5 text-slate-500 group-hover:text-teal-400 transition-colors transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% empty %}
+                    <!-- Empty State -->
+                    <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-12 text-center">
+                        <div class="w-16 h-16 mx-auto mb-4 bg-slate-700/50 rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mb-2">No blogs yet</h3>
+                        <p class="text-slate-400 mb-6">Start by generating your first blog from a YouTube video</p>
+                        <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-400 hover:to-cyan-400 text-slate-900 font-semibold rounded-xl transition-all">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            Generate Your First Blog
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="border-t border-slate-800/50 py-6">
+            <p class="text-center text-slate-500 text-sm">
+                Powered by 
+                <a href="https://github.com/mihretthe" class="text-teal-400 hover:text-teal-300 transition-colors">
+                    Mihretthe
+                </a>
+            </p>
+        </footer>
+    </div>
 </body>
 </html>
